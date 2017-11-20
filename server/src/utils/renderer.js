@@ -22,12 +22,7 @@ export default (req, store) => {
     <html>
       <head></head>
       <body>
-        <section id="root">
-          <main>
-            ${content}
-          </main>
-        </section>
-
+        <main id="root">${content}</main>
         <script src="bundle.js"></script>
       </body>
     </html>
