@@ -1,17 +1,20 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
 
 import Routes from '../client/routes'
 
-export default ({ path }) => {
+export default (req, store) => {
 
   // Render to string the target component
   // Same as passing JSX to RenderDOM
   const content = renderToString(
-    <StaticRouter location={ path } context={ {} }>
-      <Routes />
-    </StaticRouter>
+    <Provider store={ store }>
+      <StaticRouter location={ req.path } context={ {} }>
+        <Routes />
+      </StaticRouter>
+    </Provider>
   )
 
   // Make client app available from SSR

@@ -1,5 +1,7 @@
+import 'babel-polyfill'
 import express from 'express'
 import rederer from './utils/renderer'
+import createStore from './utils/create-store'
 
 const app = express ()
 
@@ -9,8 +11,11 @@ app.use(express.static('public'))
 // Capture all gets made to route '/'
 app.get('*', (req, res) => {
 
+  // Create store on server
+  const store = createStore()
+
   // Send back content to whoever made the request
-  res.send(rederer(req))
+  res.send(rederer(req, store))
 })
 
 // Start listeing on a port
