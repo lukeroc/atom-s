@@ -7,10 +7,10 @@ const app = express ()
 app.use(express.static('public'))
 
 // Capture all gets made to route '/'
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
 
   // Send back content to whoever made the request
-  res.send(rederer())
+  res.send(rederer(req))
 })
 
 // Start listeing on a port

@@ -1,12 +1,18 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
-import Home from '../client/components/Home'
+import { StaticRouter } from 'react-router-dom'
 
-export default () => {
+import Routes from '../client/routes'
+
+export default ({ path }) => {
 
   // Render to string the target component
   // Same as passing JSX to RenderDOM
-  const content = renderToString(<Home />)
+  const content = renderToString(
+    <StaticRouter location={ path } context={ {} }>
+      <Routes />
+    </StaticRouter>
+  )
 
   // Make client app available from SSR
   return `

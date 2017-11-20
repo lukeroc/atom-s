@@ -1,14 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { BrowserRouter } from 'react-router-dom'
 
-import Home from './components/Home'
-
-const root =
+import Routes from './routes'
 
 // Using .hydrate to future-proof code
 // .render will no longer work from
 // React v17 onwards
 ReactDOM.hydrate(
-  <Home />,
+  <BrowserRouter>
+    <Routes />
+  </BrowserRouter>,
   document.getElementById('root')
 )

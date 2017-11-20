@@ -60,21 +60,33 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports) {
+
+module.exports = require("react");
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+module.exports = require("react-router-dom");
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _express = __webpack_require__(1);
+var _express = __webpack_require__(3);
 
 var _express2 = _interopRequireDefault(_express);
 
-var _renderer = __webpack_require__(2);
+var _renderer = __webpack_require__(4);
 
 var _renderer2 = _interopRequireDefault(_renderer);
 
@@ -86,10 +98,10 @@ var app = (0, _express2.default)();
 app.use(_express2.default.static('public'));
 
 // Capture all gets made to route '/'
-app.get('/', function (req, res) {
+app.get('*', function (req, res) {
 
   // Send back content to whoever made the request
-  res.send((0, _renderer2.default)());
+  res.send((0, _renderer2.default)(req));
 });
 
 // Start listeing on a port
@@ -98,13 +110,13 @@ app.listen(3001, function () {
 });
 
 /***/ }),
-/* 1 */
+/* 3 */
 /***/ (function(module, exports) {
 
 module.exports = require("express");
 
 /***/ }),
-/* 2 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -114,42 +126,44 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _react = __webpack_require__(3);
+var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _server = __webpack_require__(4);
+var _server = __webpack_require__(5);
 
-var _Home = __webpack_require__(5);
+var _reactRouterDom = __webpack_require__(1);
 
-var _Home2 = _interopRequireDefault(_Home);
+var _routes = __webpack_require__(6);
+
+var _routes2 = _interopRequireDefault(_routes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function () {
+exports.default = function (_ref) {
+  var path = _ref.path;
+
 
   // Render to string the target component
   // Same as passing JSX to RenderDOM
-  var content = (0, _server.renderToString)(_react2.default.createElement(_Home2.default, null));
+  var content = (0, _server.renderToString)(_react2.default.createElement(
+    _reactRouterDom.StaticRouter,
+    { location: path, context: {} },
+    _react2.default.createElement(_routes2.default, null)
+  ));
 
   // Make client app available from SSR
   return '\n    <html>\n      <head></head>\n      <body>\n        <section id="root">\n          <main>\n            ' + content + '\n          </main>\n        </section>\n\n        <script src="bundle.js"></script>\n      </body>\n    </html>\n  ';
 };
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-module.exports = require("react");
-
-/***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-dom/server");
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -159,7 +173,43 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _react = __webpack_require__(3);
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(1);
+
+var _Home = __webpack_require__(7);
+
+var _Home2 = _interopRequireDefault(_Home);
+
+var _About = __webpack_require__(8);
+
+var _About2 = _interopRequireDefault(_About);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _Home2.default }),
+    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/about', component: _About2.default })
+  );
+};
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -185,6 +235,37 @@ var Home = function Home() {
 };
 
 exports.default = Home;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var About = function About() {
+  return _react2.default.createElement(
+    'article',
+    null,
+    _react2.default.createElement(
+      'h1',
+      null,
+      'I\'m the About Page component'
+    )
+  );
+};
+
+exports.default = About;
 
 /***/ })
 /******/ ]);
