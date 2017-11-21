@@ -28,6 +28,12 @@ class UsersList extends Component {
   }
 }
 
+// server calls loadData for components
+// loaded on matched routes
+export const loadData = store => {
+  return store.dispatch( fetchUsers() )
+}
+
 const mapStateToProps = ({users}) => {
   return { users }
 }
