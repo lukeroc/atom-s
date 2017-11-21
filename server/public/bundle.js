@@ -8289,7 +8289,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // SSR rendering of routes with data
 
-var store = (0, _redux.createStore)(_reducers2.default, {}, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+var store = (0, _redux.createStore)(_reducers2.default, window.INITIAL_STATE, // has same state dumped by server
+(0, _redux.applyMiddleware)(_reduxThunk2.default));
 
 // Using .hydrate to future-proof code
 // .render will no longer work from
@@ -38906,6 +38907,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
@@ -38916,22 +38919,19 @@ var _Home = __webpack_require__(477);
 
 var _Home2 = _interopRequireDefault(_Home);
 
-var _UsersList = __webpack_require__(478);
+var _Users = __webpack_require__(478);
 
-var _UsersList2 = _interopRequireDefault(_UsersList);
+var _Users2 = _interopRequireDefault(_Users);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = [{
+exports.default = [_extends({}, _Home2.default, {
   path: '/',
-  component: _Home2.default,
   exact: true
-}, {
-  loadData: _UsersList.loadData,
+}), _extends({}, _Users2.default, {
   path: '/users',
-  component: _UsersList2.default,
   exact: true
-}];
+})];
 
 /***/ }),
 /* 477 */
@@ -38969,7 +38969,10 @@ var Home = function Home() {
   );
 };
 
-exports.default = Home;
+exports.default = {
+  component: Home,
+  loadData: null
+};
 
 /***/ }),
 /* 478 */
@@ -38981,7 +38984,6 @@ exports.default = Home;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.loadData = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -39001,16 +39003,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var UsersList = function (_Component) {
-  _inherits(UsersList, _Component);
+var Users = function (_Component) {
+  _inherits(Users, _Component);
 
-  function UsersList() {
-    _classCallCheck(this, UsersList);
+  function Users() {
+    _classCallCheck(this, Users);
 
-    return _possibleConstructorReturn(this, (UsersList.__proto__ || Object.getPrototypeOf(UsersList)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Users.__proto__ || Object.getPrototypeOf(Users)).apply(this, arguments));
   }
 
-  _createClass(UsersList, [{
+  _createClass(Users, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.props.fetchUsers();
@@ -39046,14 +39048,14 @@ var UsersList = function (_Component) {
     }
   }]);
 
-  return UsersList;
+  return Users;
 }(_react.Component);
 
 // server calls loadData for components
 // loaded on matched routes
 
 
-var loadData = exports.loadData = function loadData(store) {
+var loadData = function loadData(store) {
   return store.dispatch((0, _actions.fetchUsers)());
 };
 
@@ -39063,7 +39065,10 @@ var mapStateToProps = function mapStateToProps(_ref) {
   return { users: users };
 };
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, { fetchUsers: _actions.fetchUsers })(UsersList);
+exports.default = {
+  component: (0, _reactRedux.connect)(mapStateToProps, { fetchUsers: _actions.fetchUsers })(Users),
+  loadData: loadData
+};
 
 /***/ })
 /******/ ]);
