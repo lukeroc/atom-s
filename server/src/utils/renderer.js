@@ -24,6 +24,13 @@ export default (req, store) => {
       <head></head>
       <body>
         <main id="root">${content}</main>
+
+        <script>
+          // Get initial state from server and keep it
+          // to initialise client store with same state
+          window.INITIAL_STATE = ${ JSON.stringify( store.getState() ) }
+        </script>
+
         <script src="bundle.js"></script>
       </body>
     </html>

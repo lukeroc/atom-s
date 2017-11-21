@@ -11,7 +11,11 @@ import reducers from './reducers'
 
 import Routes from './routes'
 
-const store = createStore(reducers, {}, applyMiddleware(thunk))
+const store = createStore(
+  reducers,
+  window.INITIAL_STATE, // has same state dumped by server
+  applyMiddleware(thunk)
+)
 
 // Using .hydrate to future-proof code
 // .render will no longer work from
