@@ -106,11 +106,11 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(2);
 
-var _Home = __webpack_require__(12);
+var _Home = __webpack_require__(13);
 
 var _Home2 = _interopRequireDefault(_Home);
 
-var _Users = __webpack_require__(13);
+var _Users = __webpack_require__(14);
 
 var _Users2 = _interopRequireDefault(_Users);
 
@@ -136,7 +136,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.fetchUsers = exports.FETCH_USERS = undefined;
 
-var _axios = __webpack_require__(14);
+var _axios = __webpack_require__(15);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -205,7 +205,7 @@ var _renderer = __webpack_require__(10);
 
 var _renderer2 = _interopRequireDefault(_renderer);
 
-var _createStore = __webpack_require__(15);
+var _createStore = __webpack_require__(16);
 
 var _createStore2 = _interopRequireDefault(_createStore);
 
@@ -285,12 +285,17 @@ var _reactRedux = __webpack_require__(3);
 
 var _reactRouterConfig = __webpack_require__(1);
 
+var _serializeJavascript = __webpack_require__(12);
+
+var _serializeJavascript2 = _interopRequireDefault(_serializeJavascript);
+
 var _routes = __webpack_require__(4);
 
 var _routes2 = _interopRequireDefault(_routes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// SSR rendering of routes with data
 exports.default = function (req, store) {
 
   // Render to string the target component
@@ -310,8 +315,8 @@ exports.default = function (req, store) {
   ));
 
   // Make client app available from SSR
-  return '\n    <html>\n      <head></head>\n      <body>\n        <main id="root">' + content + '</main>\n\n        <script>\n          // Get initial state from server and keep it\n          // to initialise client store with same state\n          window.INITIAL_STATE = ' + JSON.stringify(store.getState()) + '\n        </script>\n\n        <script src="bundle.js"></script>\n      </body>\n    </html>\n  ';
-}; // SSR rendering of routes with data
+  return '\n    <html>\n      <head></head>\n      <body>\n        <main id="root">' + content + '</main>\n\n        <script>\n          // Get initial state from server and keep it\n          // to initialise client store with same state\n          window.INITIAL_STATE = ' + (0, _serializeJavascript2.default)(store.getState()) + '\n        </script>\n\n        <script src="bundle.js"></script>\n      </body>\n    </html>\n  ';
+};
 
 /***/ }),
 /* 11 */
@@ -321,6 +326,12 @@ module.exports = require("react-dom/server");
 
 /***/ }),
 /* 12 */
+/***/ (function(module, exports) {
+
+module.exports = require("serialize-javascript");
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -361,7 +372,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -457,13 +468,13 @@ exports.default = {
 };
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 module.exports = require("axios");
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -475,11 +486,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(6);
 
-var _reduxThunk = __webpack_require__(16);
+var _reduxThunk = __webpack_require__(17);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-var _reducers = __webpack_require__(17);
+var _reducers = __webpack_require__(18);
 
 var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -491,13 +502,13 @@ exports.default = function () {
 };
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 module.exports = require("redux-thunk");
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -509,7 +520,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(6);
 
-var _users = __webpack_require__(18);
+var _users = __webpack_require__(19);
 
 var _users2 = _interopRequireDefault(_users);
 
@@ -520,7 +531,7 @@ exports.default = (0, _redux.combineReducers)({
 });
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
