@@ -20,7 +20,7 @@ app.use('/api', proxy('http://react-ssr-api.herokuapp.com', {
 
   // optional parameter to allow header config
   proxyReqOptDecorator(opts) {
-    opts.headers['x-forwarded-host'] = 'localhost:3001' // TODO: change to requester const
+    opts.headers['x-forwarded-host'] = 'localhost:3000' // TODO: change to requester const
     return opts
   }
 }))
@@ -52,6 +52,6 @@ app.get('*', (req, res) => {
 })
 
 // Start listeing on a port
-app.listen(3001, () => {
-  console.log('Listening on port 3001')
+app.listen(3000, () => {
+  console.log('Listening on port 3000')
 })
