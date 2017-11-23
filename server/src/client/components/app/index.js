@@ -5,14 +5,13 @@ import Header from '../organisms/header'
 
 class App extends Component {
   render () {
-
-    const { routes } = this.props.route
-
     return (
-      <article className="app">
+      <main className="app">
         <Header />
-        { renderRoutes(routes) }
-      </article>
+        <article>
+          { renderRoutes(this.props.route.routes) }
+        </article>
+      </main>
     )
   }
 }
