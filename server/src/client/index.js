@@ -6,15 +6,20 @@ import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import { renderRoutes } from 'react-router-config' // SSR rendering of routes with data
+import axios from 'axios'
 
 import reducers from './reducers'
 
 import Routes from './routes'
 
+const axiosClient = axios.create({
+  baseURL: '/api'
+})
+
 const store = createStore(
   reducers,
   window.INITIAL_STATE, // has same state dumped by server
-  applyMiddleware(thunk)
+  applyMiddleware(thunk.withExtraArgument(axiosClient)) // pass in axios instance with redux thuk to handle SSR auth requests
 )
 
 // Using .hydrate to future-proof code
